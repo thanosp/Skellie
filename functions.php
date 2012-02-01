@@ -3,7 +3,7 @@ require_once 'inc/WPView.php';
 require_once 'inc/WPLayout.php';
 
 function scripts() {
-   wp_enqueue_script('normalize', get_template_directory_uri() . '/css/normalize.css');
+   wp_enqueue_style('normalize', get_template_directory_uri() . '/css/normalize.css');
    wp_enqueue_script('modernizr', get_template_directory_uri() . '/js/libs/modernizr-2.0.6.min.js');
 }    
 add_action('wp_enqueue_scripts', 'scripts');
