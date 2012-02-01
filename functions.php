@@ -2,36 +2,11 @@
 require_once 'inc/WPView.php';
 require_once 'inc/WPLayout.php';
 
-/**
- * Returns a versioned file name based on the last modified file date
- * 
- * @param string $fileUrl Pointing to the file as would have been from the html
- * @return string a versioned filename
- */
-function getAssetVersionNumber($fileUrl)
-{
-    if (false === defined('ABSPATH')) {
-        return $fileUrl;
-    }
-    
-    $publicRoot = __DIR__;
-    $path = $publicRoot . $fileUrl;
-    
-    if (false === is_file($path)) {
-        return $fileUrl;
-    }
-    
-    $modTime = filemtime($path);
-    $pathInfo = pathinfo($path);
-    
-    if (! isset($pathInfo['extension'])) {
-        return $fileUrl;
-    }
-    
-    $versionedFilename = $pathInfo['dirname'] . DIRECTORY_SEPARATOR . $pathInfo['filename'] . ".{$modTime}." . $pathInfo['extension'];
-    
-    return str_replace($publicRoot, '', $versionedFilename);
-}
+function scripts() {
+   wp_enqueue_script('normalize', get_template_directory_uri() . '/css/normalize.css');
+   wp_enqueue_script('modernizr', get_template_directory_uri() . '/js/libs/modernizr-2.0.6.min.js');
+}    
+add_action('wp_enqueue_scripts', 'scripts');
 
 /**
  * Renders a layout pushing the content closure to it
