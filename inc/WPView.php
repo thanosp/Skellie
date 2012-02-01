@@ -3,12 +3,12 @@
  * View class for wordpress 
  * @category Wordpress
  * @package WPView
- * @version $Id: WPView.php 14 2012-02-01 12:24:05Z thanos $
+ * @version $Id: WPView.php 15 2012-02-01 13:33:10Z thanos $
  */
 class WPView
 {
-    public $template = null;
-    public $arguments = null;
+    protected $template = null;
+    protected $arguments = null;
 
     public function __construct($template, $arguments)
     {
