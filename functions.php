@@ -1,5 +1,6 @@
 <?php
 require_once 'inc/WPView.php';
+require_once 'inc/WPLayout.php';
 
 /**
  * Returns a versioned file name based on the last modified file date
@@ -33,6 +34,30 @@ function getAssetVersionNumber($fileUrl)
 }
 
 /**
+ * Renders a layout pushing the content closure to it
+ * @param string $layout
+ * @param Closure $content
+ * @param array $arguments
+ */
+function layout($layout, Closure $content, $arguments = array())
+{
+    $templateName = __DIR__ . "/layouts/{$layout}.php";
+    if (file_exists($templateName)) {
+        $template = $templateName;
+    } else {
+        $template = __DIR__ . "/layouts/default.php";
+    }
+    
+    //let the view know what kind of partial it renders
+    if (! isset($arguments['layout'])) {
+        $arguments['layout'] = $layout;
+    }
+    
+    $view = new WPLayout($template, $content, $arguments);
+    $view->render();
+}
+
+/**
  * Will render a partial using WPView
  * @param string $slug 
  * @param string $name specialization of the slug. ignored if not found 
@@ -57,6 +82,39 @@ function partial($slug, $name = null, $arguments = array())
     
     $view = new WPView($template, $arguments);
     $view->render();
+}
+
+/**
+ * Takes over the rendering process and uses layouts instead
+ * @param string $template
+ * @return null
+ */
+function takeOverLayout($template)
+{
+    $layout = templateToLayout($template);
+    layout($layout, function() use ($template) {
+        include $template;
+    });
+    return null;
+}
+add_filter('template_include', 'takeOverLayout', 10000);
+
+/**
+ * Figures out what layout to use for the given template
+ * Hackie hacky hack hack
+ * @param string $template
+ * @return string
+ */
+function templateToLayout($template)
+{
+    preg_match('/\@layout ([a-z]+)/', file_get_contents($template), $matches);
+    if (isset($matches[1]) && strlen($matches[1]) > 1) {
+        $layout = $matches[1];
+    } else {
+        $info = new SplFileInfo($template);
+        $layout = $info->getBasename('.php');
+    }
+    return $layout;
 }
 
 /**
