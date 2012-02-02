@@ -4,7 +4,7 @@
  * 
  * @category Wordpress
  * @package WPLayout
- * @version $Id: $
+ * @version $Id: WPLayout.php 22 2012-02-02 08:26:36Z thanos $
  */
 class WPLayout extends WPView
 {

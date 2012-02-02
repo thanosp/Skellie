@@ -2,11 +2,11 @@
 require_once 'inc/WPView.php';
 require_once 'inc/WPLayout.php';
 
-function scripts() {
-   wp_enqueue_script('normalize', get_template_directory_uri() . '/css/normalize.css');
+function stylesAndScripts() {
+   wp_enqueue_style('normalize', get_template_directory_uri() . '/css/normalize.css');
    wp_enqueue_script('modernizr', get_template_directory_uri() . '/js/libs/modernizr-2.0.6.min.js');
 }    
-add_action('wp_enqueue_scripts', 'scripts');
+add_action('wp_enqueue_scripts', 'stylesAndScripts');
 
 /**
  * Renders a layout pushing the content closure to it
@@ -64,24 +64,26 @@ function partial($slug, $name = null, $arguments = array())
  * @param string $template
  * @return null
  */
-function takeOverLayout($template)
+function bootstrapLayout($template)
 {
-    $layout = templateToLayout($template);
+    $layout = getTemplateLayout($template);
     layout($layout, function() use ($template) {
         include $template;
     });
+    //required in order to prevent wordpress from rendering
     return null;
 }
-add_filter('template_include', 'takeOverLayout', 10000);
+add_filter('template_include', 'bootstrapLayout', 10000);
 
 /**
  * Figures out what layout to use for the given template
- * Hackie hacky hack hack
+ * Hack, hack, bacon and hack
  * @param string $template
  * @return string
  */
-function templateToLayout($template)
+function getTemplateLayout($template)
 {
+    // looks for an annotation that denotes the layout to use
     preg_match('/\@layout ([a-z]+)/', file_get_contents($template), $matches);
     if (isset($matches[1]) && strlen($matches[1]) > 1) {
         $layout = $matches[1];
