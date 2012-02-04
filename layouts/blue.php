@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-<div style="color: blue;">
+<body <?php body_class('layout-'.$this->layout); ?>>
 <?php $this->content(); ?>
-</div>
+</body>
 <?php get_footer();

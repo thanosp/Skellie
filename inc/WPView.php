@@ -1,6 +1,6 @@
 <?php
 /**
- * View class for wordpress 
+ * View class for wordpress
  * @category Wordpress
  * @package WPView
  * @version $Id: WPView.php 15 2012-02-01 13:33:10Z thanos $
@@ -19,7 +19,7 @@ class WPView
     public function render()
     {
         global $posts, $post, $wp_did_header, $wp_did_template_redirect, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
-        
+       
         require $this->template;
     }
 
@@ -28,3 +28,4 @@ class WPView
         return isset($this->arguments[$name]) ? $this->arguments[$name] : null;
     }
 }
+  
