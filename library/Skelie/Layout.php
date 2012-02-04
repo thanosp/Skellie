@@ -1,4 +1,5 @@
 <?php
+namespace Skelie;
 /**
  * Layout class
  *
@@ -6,11 +7,11 @@
  * @package WPLayout
  * @version $Id: WPLayout.php 22 2012-02-02 08:26:36Z thanos $
  */
-class WPLayout extends WPView
+class Layout extends View
 {
     protected $contentClosure = null;
    
-    public function __construct($template, Closure $content, $arguments)
+    public function __construct($template, \Closure $content, $arguments)
     {
         $this->template = $template;
         $this->contentClosure = $content;

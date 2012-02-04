@@ -1,5 +1,7 @@
 <?php
-require_once 'library/WPApplication.php';
+require_once 'library/Skelie/Frame.php';
+
+use Skelie\Frame;
 
 /**
  * Takes over the rendering process and uses layouts instead
@@ -8,7 +10,7 @@ require_once 'library/WPApplication.php';
  */
 function bootstrap($templateFile)
 {
-    $application = new WPApplication($templateFile);
+    $application = new Frame($templateFile);
     $application->run();
     
     //required in order to prevent wordpress from rendering

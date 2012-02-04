@@ -1,9 +1,12 @@
 <?php
-require_once __DIR__. '/WPView.php';
-require_once __DIR__. '/WPLayout.php';
-require_once __DIR__. '/WPTemplate.php';
 
-class WPApplication
+namespace Skelie;
+
+require_once __DIR__. '/View.php';
+require_once __DIR__. '/Layout.php';
+require_once __DIR__. '/Template.php';
+
+class Frame
 {
 	public $templateFile = null;
 
@@ -24,7 +27,7 @@ class WPApplication
 	    if (isset($matches[1]) && strlen($matches[1]) > 1) {
 	        $layout = $matches[1];
 	    } else {
-	        $info = new SplFileInfo($template);
+	        $info = new \SplFileInfo($template);
 	        $layout = $info->getBasename('.php');
 	    }
 	    return $layout;
@@ -36,7 +39,7 @@ class WPApplication
 	 * @param Closure $content
 	 * @param array $arguments
 	 */
-	function renderLayout($layout, Closure $content, $arguments = array())
+	function renderLayout($layout, \Closure $content, $arguments = array())
 	{
 	    $templateName = get_template_directory() . "/layouts/{$layout}.php";
 	    if (file_exists($templateName)) {
@@ -50,7 +53,7 @@ class WPApplication
 	        $arguments['layout'] = $layout;
 	    }
 	   
-	    $view = new WPLayout($template, $content, $arguments);
+	    $view = new Layout($template, $content, $arguments);
 	    $view->render();
 	}
 
@@ -60,7 +63,7 @@ class WPApplication
 		$layout = $this->getTemplateLayout($templateFile);
 	    $this->renderLayout($layout, function () use ($templateFile) {
 	        $arguments = array('layout' => $layout);
-	        $template = new WPTemplate($templateFile, $arguments);
+	        $template = new Template($templateFile, $arguments);
 	        $template->render();
 	    });
 	}

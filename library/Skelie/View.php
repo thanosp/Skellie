@@ -1,11 +1,12 @@
 <?php
+namespace Skelie;
 /**
  * View class for wordpress
  * @category Wordpress
  * @package WPView
  * @version $Id: WPView.php 15 2012-02-01 13:33:10Z thanos $
  */
-class WPView
+class View
 {
     protected $template = null;
     protected $arguments = null;
@@ -52,7 +53,7 @@ class WPView
             $arguments['type'] = $name;
         }
        
-        $view = new WPView($template, $arguments);
+        $view = new self($template, $arguments);
         $view->render();
     }
 }
