@@ -35,11 +35,14 @@ Partials can be used instead of get_template_part and also give the ability
 to pass variables to the partials. The partial can access the variables using $this.
 
 From within a template, layout or another partial:
-  $this->partial('preview', 'whatever', array('divClass' => 'cooool'));
+
+    $this->partial('preview', 'whatever', array('divClass' => 'cooool'));
+
 
 If partials/preview/whatever.php is found it will be called,
 otherwise the default is partials/preview/_default.php
 Within the partial you can do:
-  <div class="<?php echo $this->divClass; ?>">
-    Hola mundo
-  </div>
+
+    <div class="<?php echo $this->divClass; ?>">
+        Hola mundo
+    </div>
