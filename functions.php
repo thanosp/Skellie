@@ -11,6 +11,7 @@ function stylesAndScripts()
     wp_enqueue_style('normalize', get_template_directory_uri() . '/css/normalize.css');
     wp_enqueue_script('modernizr', get_template_directory_uri() . '/js/libs/modernizr-2.0.6.min.js');
     wp_enqueue_style('theme_specific_style', get_template_directory_uri() . '/css/style.css');
+
 }    
 add_action('wp_enqueue_scripts', 'stylesAndScripts');
 
@@ -70,6 +71,7 @@ function partial($slug, $name = null, $arguments = array())
  * @param string $templateFile
  * @return null
  */
+<<<<<<< HEAD
 function bootstrapLayout($templateFile)
 {
     $layout = getTemplateLayout($templateFile);
@@ -77,6 +79,13 @@ function bootstrapLayout($templateFile)
         $arguments = array('layout' => $layout);
         $template = new WPTemplate($templateFile, $arguments);
         $template->render();
+=======
+function bootstrapLayout($template)
+{
+    $layout = getTemplateLayout($template);
+    layout($layout, function() use ($template) {
+        include $template;
+>>>>>>> 7e53210da92fe33e4754740b91ce0e06a4814da5
     });
     //required in order to prevent wordpress from rendering
     return null;
