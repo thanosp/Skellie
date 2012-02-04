@@ -8,5 +8,5 @@
 while (have_posts()) {
     get_posts();
     the_post();
-    partial('preview', 'homepage');
+    $this->partial('preview', 'homepage');
 }

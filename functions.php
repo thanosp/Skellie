@@ -1,4 +1,5 @@
 <?php
+require_once 'inc/WPApplication.php';
 require_once 'inc/WPView.php';
 require_once 'inc/WPLayout.php';
 require_once 'inc/WPTemplate.php';
@@ -14,94 +15,21 @@ function stylesAndScripts()
 }
 add_action('wp_enqueue_scripts', 'stylesAndScripts');
 
-/**
- * Renders a layout pushing the content closure to it
- * @param string $layout
- * @param Closure $content
- * @param array $arguments
- */
-function layout($layout, Closure $content, $arguments = array())
-{
-    $templateName = __DIR__ . "/layouts/{$layout}.php";
-    if (file_exists($templateName)) {
-        $template = $templateName;
-    } else {
-        $template = __DIR__ . "/layouts/default.php";
-    }
-   
-    //let the view know what kind of partial it renders
-    if (! isset($arguments['layout'])) {
-        $arguments['layout'] = $layout;
-    }
-   
-    $view = new WPLayout($template, $content, $arguments);
-    $view->render();
-}
-
-/**
- * Will render a partial using WPView
- * @param string $slug
- * @param string $name specialization of the slug. ignored if not found
- * @param array $arguments optional arguments for the view
- */
-function partial($slug, $name = null, $arguments = array())
-{
-    $templateName = __DIR__ . "/partials/{$slug}/{$name}.php";
-    if ($name !== null && file_exists($templateName)) {
-        $template = $templateName;
-    } else {
-        $template = __DIR__ . "/partials/{$slug}/_default.php";
-    }
-   
-    //let the view know what kind of partial it renders
-    if (! isset($arguments['slug'])) {
-        $arguments['slug'] = $slug;
-    }
-    if (! isset($arguments['type'])) {
-        $arguments['type'] = $name;
-    }
-   
-    $view = new WPView($template, $arguments);
-    $view->render();
-}
 
 /**
  * Takes over the rendering process and uses layouts instead
  * @param string $templateFile
  * @return null
  */
-function bootstrapLayout($templateFile)
+function bootstrap($templateFile)
 {
-    $layout = getTemplateLayout($templateFile);
-    layout($layout, function () use ($templateFile) {
-        $arguments = array('layout' => $layout);
-        $template = new WPTemplate($templateFile, $arguments);
-        $template->render();
-    });
+    $application = new WPApplication($templateFile);
+    $application->run();
+    
     //required in order to prevent wordpress from rendering
     return null;
 }
-add_filter('template_include', 'bootstrapLayout', 10000);
-
-/**
- * Figures out what layout to use for the given template
- * Hack, hack, bacon and hack
- * @param string $template
- * @return string
- */
-function getTemplateLayout($template)
-{
-    // looks for an annotation that denotes the layout to use
-    preg_match('/\@layout ([a-z]+)/', file_get_contents($template), $matches);
-    if (isset($matches[1]) && strlen($matches[1]) > 1) {
-        $layout = $matches[1];
-    } else {
-        $info = new SplFileInfo($template);
-        $layout = $info->getBasename('.php');
-    }
-    return $layout;
-}
-
+add_filter('template_include', 'bootstrap', 10000);
 
 /**
  * Setups theme specific stuff like thumbnail support and menus

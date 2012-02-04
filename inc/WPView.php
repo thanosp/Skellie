@@ -27,5 +27,33 @@ class WPView
     {
         return isset($this->arguments[$name]) ? $this->arguments[$name] : null;
     }
+
+    
+    /**
+     * Will render a partial using WPView
+     * @param string $slug
+     * @param string $name specialization of the slug. ignored if not found
+     * @param array $arguments optional arguments for the view
+     */
+    function partial($slug, $name = null, $arguments = array())
+    {
+        $templateName = get_template_directory() . "/partials/{$slug}/{$name}.php";
+        if ($name !== null && file_exists($templateName)) {
+            $template = $templateName;
+        } else {
+            $template = get_template_directory() . "/partials/{$slug}/_default.php";
+        }
+       
+        //let the view know what kind of partial it renders
+        if (! isset($arguments['slug'])) {
+            $arguments['slug'] = $slug;
+        }
+        if (! isset($arguments['type'])) {
+            $arguments['type'] = $name;
+        }
+       
+        $view = new WPView($template, $arguments);
+        $view->render();
+    }
 }
   
