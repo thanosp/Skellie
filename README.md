@@ -2,8 +2,10 @@ Features
 --------
 * Regular wordpress template files can now have layouts
 * Layouts and templates can render views(partials) and pass variables to them
-* Layouts, templates and views are objects and can now be more self conscious (all objects).
+* Layouts, templates and views are objects and can now be more self conscious.
 * Layouts and views have default fallbacks like get_template_part of wordpress.
+* Cleaner themes folder with all partials structured.
+* Cleaner templates with all the wrapping code being in layouts.
 
 ### Layouts
 One regular wordpress template will now have a layout attached to it by default.
