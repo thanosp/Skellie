@@ -1,23 +1,3 @@
-        .-.
-       (e.e)
-        (m)
-      .-="=-.  W
-     // =T= \\,/
-    () ==|== ()
-     \  =V=
-      M(oVo)
-       // \\
-      //   \\
-     ()     ()
-      \\    ||
-       \'   '|
-     =="     "==
-     Here
-     Lies
-     A
-     Wordpress
-     Theme
-
 Features
 --------
 * Regular wordpress template files can now have layouts
@@ -60,3 +40,19 @@ Within the partial you can do:
     <div class="<?php echo $this->divClass; ?>">
         Hola mundo
     </div>
+    
+--------
+        .-.
+       (e.e)
+        (m)
+      .-="=-.  W
+     // =T= \\,/
+    () ==|== ()
+     \  =V=
+      M(oVo)
+       // \\
+      //   \\
+     ()     ()
+      \\    ||
+       \'   '|
+     =="     "==
