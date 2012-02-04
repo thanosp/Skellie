@@ -1,4 +1,8 @@
 <?php
+require_once __DIR__. '/WPView.php';
+require_once __DIR__. '/WPLayout.php';
+require_once __DIR__. '/WPTemplate.php';
+
 class WPApplication
 {
 	public $templateFile = null;
