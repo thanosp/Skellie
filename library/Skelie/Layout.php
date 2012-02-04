@@ -3,15 +3,21 @@ namespace Skelie;
 /**
  * Layout class
  *
- * @category Wordpress
- * @package WPLayout
- * @version $Id: WPLayout.php 22 2012-02-02 08:26:36Z thanos $
+ * @package Skelie
  */
 class Layout extends View
 {
     protected $contentClosure = null;
    
-    public function __construct($template, \Closure $content, $arguments)
+    /**
+     * We need to know which file to render,
+     * what to call for getting the content
+     * and which arguments to pass through when requested.
+     * @param string $template
+     * @param \Closure $content
+     * @param array $arguments
+     */
+    public function __construct($template, \Closure $content, array $arguments)
     {
         $this->template = $template;
         $this->contentClosure = $content;

@@ -1,19 +1,28 @@
 <?php
-
 namespace Skelie;
 
 require_once __DIR__. '/View.php';
 require_once __DIR__. '/Layout.php';
 require_once __DIR__. '/Template.php';
 
+/**
+ * The frame bootstraps the application
+ * It brings the layout and the template together
+ * @package Skelie
+ */
 class Frame
 {
-	public $templateFile = null;
+	protected $templateFile = null;
 
+	/**
+	 * Bootstrapping requires the template file 
+	 * that wordpress decided we should render
+	 */
 	public function __construct($templateFile)
 	{
 		$this->templateFile = $templateFile;
 	}
+
 	/**
 	 * Figures out what layout to use for the given template
 	 * Hack, hack, bacon and hack
@@ -57,6 +66,9 @@ class Frame
 	    $view->render();
 	}
 
+	/**
+	 * Init point. Starts the whole process
+	 */
 	public function run()
 	{
 		$templateFile = $this->templateFile;
