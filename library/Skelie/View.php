@@ -1,5 +1,6 @@
 <?php
 namespace Skelie;
+
 /**
  * View class.
  * Templates and Layouts all extend this

@@ -3,7 +3,7 @@
  * Homepage template
  *
  * Template Name: Homepage
- * @layout blue
+ * @layout default
  */
 while (have_posts()) {
     get_posts();

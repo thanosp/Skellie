@@ -1,9 +1,3 @@
-  <?php wp_footer(); ?>
-
-  <!--[if lt IE 7]>
-    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
-    <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
-  <![endif]-->
-
-</body>
-</html>
+<?php
+// wordpress needs a footer.php or prints a default one
+// ignore this and use $this->partial('base', 'footer') instead
