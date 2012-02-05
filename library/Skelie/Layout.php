@@ -26,7 +26,7 @@ class Layout extends View
     }
 
     /**
-     * Renders the main layout
+     * Renders the layout
      */
     public function render()
     {

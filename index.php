@@ -3,7 +3,7 @@
  * Homepage template
  *
  * Template Name: Homepage
- * @layout default
+ * @layout with-sidebar
  */
 while (have_posts()) {
     get_posts();

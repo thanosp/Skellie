@@ -10,7 +10,7 @@ require_once __DIR__. '/Template.php';
  * It brings the layout and the template together
  * @package Skelie
  */
-class Frame
+class Frame extends View
 {
 	protected $templateFile = null;
 
@@ -32,7 +32,7 @@ class Frame
 	public function getTemplateLayout($template)
 	{
 	    // looks for an annotation that denotes the layout to use
-	    preg_match('/\@layout ([a-z]+)/', file_get_contents($template), $matches);
+	    preg_match('/\@layout ([a-z0-9\-\_\.]+)/', file_get_contents($template), $matches);
 	    if (isset($matches[1]) && strlen($matches[1]) > 1) {
 	        $layout = $matches[1];
 	    } else {
@@ -50,11 +50,9 @@ class Frame
 	 */
 	function renderLayout($layout, \Closure $content, $arguments = array())
 	{
-	    $templateName = get_template_directory() . "/layouts/{$layout}.php";
-	    if (file_exists($templateName)) {
-	        $template = $templateName;
-	    } else {
-	        $template = get_template_directory() . "/layouts/default.php";
+	    $layoutFile = $this->templatePath("/layouts/{$layout}.php");
+	    if (! file_exists($layoutFile)) {
+	        $layoutFile = $this->templatePath("/layouts/default.php");
 	    }
 	   
 	    //let the view know what kind of partial it renders
@@ -62,14 +60,14 @@ class Frame
 	        $arguments['layout'] = $layout;
 	    }
 	   
-	    $view = new Layout($template, $content, $arguments);
-	    $view->render();
+	    $layout = new Layout($layoutFile, $content, $arguments);
+	    $layout->render();
 	}
 
 	/**
 	 * Init point. Starts the whole process
 	 */
-	public function run()
+	public function render()
 	{
 		$templateFile = $this->templateFile;
 		$layout = $this->getTemplateLayout($templateFile);

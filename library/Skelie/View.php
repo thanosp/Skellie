@@ -41,20 +41,28 @@ class View
         return isset($this->arguments[$name]) ? $this->arguments[$name] : null;
     }
 
+    protected function getDefaultPartial($slug, $name)
+    {
+        $templateFile = $this->templatePath("/partials/{$slug}/default.php");
+        if (file_exists($templateFile)) {
+            return $templateFile;
+        } else {
+            return $this->templatePath("/partials/{$slug}.php");
+        }
+    }
     
     /**
-     * Will render a partial using WPView
+     * Will render a partial using a new view object
      * @param string $slug
      * @param string $name specialization of the slug. ignored if not found
      * @param array $arguments optional arguments for the view
      */
-    function partial($slug, $name = null, $arguments = array())
+    public function partial($slug, $name = null, $arguments = array())
     {
-        $templateName = get_template_directory() . "/partials/{$slug}/{$name}.php";
-        if ($name !== null && file_exists($templateName)) {
-            $template = $templateName;
-        } else {
-            $template = get_template_directory() . "/partials/{$slug}/_default.php";
+        $templateFile = $this->templatePath("/partials/{$slug}/{$name}.php");
+
+        if (!file_exists($templateFile)) {
+            $templateFile = $this->getDefaultPartial($slug, $name);
         }
        
         //let the view know what kind of partial it renders
@@ -65,8 +73,18 @@ class View
             $arguments['type'] = $name;
         }
        
-        $view = new self($template, $arguments);
+        $view = new self($templateFile, $arguments);
         $view->render();
+    }
+
+    /**
+     * Prepends the given path with the template path
+     * @param string $path
+     * @return string
+     */ 
+    public function templatePath($path = null)
+    {
+        return get_template_directory() . $path;
     }
 }
   
