@@ -1,11 +1,12 @@
 Features
 --------
-* Regular wordpress template files can now have layouts
-* Layouts and templates can render views(partials) and pass variables to them
+* Regular wordpress template files can now have layouts which will render the template in a placeholder.
+* Layouts and templates can render views(partials) and pass variables to them.
 * Layouts, templates and views are objects and can now be more self conscious.
 * Layouts and views have default fallbacks like get_template_part of wordpress.
 * Cleaner themes folder with all partials structured.
 * Cleaner templates with all the wrapping code being in layouts.
+* Only uses one filter so the change of it breaking upon update is minimal.
 
 ### Layouts
 One regular wordpress template will now have a layout attached to it by default.
