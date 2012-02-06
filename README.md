@@ -48,6 +48,7 @@ Within the partial you can do:
     </div>
     
 and continue doing your regular wordpress stuff.
+
 --------
         .-.
        (e.e)
