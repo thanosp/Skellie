@@ -20,7 +20,7 @@ class Frame extends View
 	 */
 	public function __construct($templateFile)
 	{
-		$this->templateFile = $templateFile;
+	    $this->templateFile = $templateFile;
 	}
 
 	/**
@@ -69,10 +69,10 @@ class Frame extends View
 	 */
 	public function render()
 	{
-		$templateFile = $this->templateFile;
-		$layout = $this->getTemplateLayout($templateFile);
+	    $templateFile = $this->templateFile;
+	    $layout = $this->getTemplateLayout($templateFile);
 	    $this->renderLayout($layout, function () use ($templateFile) {
-	        $arguments = array('layout' => $layout);
+	        $arguments = array('layout' => $templateFile);
 	        $template = new Template($templateFile, $arguments);
 	        $template->render();
 	    });
