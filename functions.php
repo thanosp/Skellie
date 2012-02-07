@@ -8,15 +8,13 @@ use Skelie\Frame;
  * @param string $templateFile
  * @return null
  */
-function bootstrapSkelie($templateFile)
-{
+add_filter('template_include', function ($templateFile) {
     $frame = new Frame($templateFile);
     $frame->render();
     
     //required in order to prevent wordpress from rendering
     return null;
-}
-add_filter('template_include', 'bootstrapSkelie', 10000);
+}, 10000);
 
 /**
  * Everything below this can be removed. Clean functions.php ftw
