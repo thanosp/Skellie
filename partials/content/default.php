@@ -3,10 +3,3 @@
     <?php the_content(); ?>
     <?php edit_post_link( __( 'Edit')); ?>
 </article>
-<?php 
-if (!$this->stopIt) {
-	echo 'Can I call myself?';
-	$this->partial('content', null, array('stopIt' => true));
-} else {
-	echo 'Yes I can!';
-}
