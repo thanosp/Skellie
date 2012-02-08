@@ -1,1 +1,1 @@
-<?php echo $this->slug; ?>
+<!-- <?php echo $this->slug; ?> -->
