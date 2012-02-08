@@ -1,13 +1,14 @@
 Features
 --------
 * Regular wordpress template files can now have layouts which will render the template in a placeholder.
-* Layouts and templates can render views(partials) and pass arguments to them.
-* Layouts, templates and views are objects and can now be more self conscious.
+* Layouts, templates and partials can render partials and pass arguments to them.
+* Layouts, templates and views are objects so you can use $this.
 * Layouts and partials have default fallbacks like get_template_part of wordpress.
 * Cleaner theme folder with all partials in one place.
 * Cleaner templates with all the wrapping code being in layouts.
-* Only uses one filter so the chance of it breaking upon update is minimal.
-
+* Only uses one filter so the chance of it breaking upon wordpress update is minimal.
+* Does not break wordpress plugins and you don't have to rewrite them either.
+ 
 ### Layouts
 One regular wordpress template will now have a layout attached to it by default.
 A layout is basically a wrapper around templates in order to avoid duplicate wrapping code.
