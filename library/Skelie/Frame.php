@@ -48,7 +48,7 @@ class Frame extends View
 	 * @param Closure $content
 	 * @param array $arguments
 	 */
-	function renderLayout($layout, \Closure $content, $arguments = array())
+	protected function renderLayout($layout, \Closure $content, $arguments = array())
 	{
 	    $layoutFile = $this->templatePath("/layouts/{$layout}.php");
 	    if (! file_exists($layoutFile)) {
