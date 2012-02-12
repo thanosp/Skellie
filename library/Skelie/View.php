@@ -6,7 +6,7 @@ namespace Skelie;
  * Templates and Layouts all extend this
  * @package Skelie
  */
-class View
+abstract class View
 {
     protected $template = null;
     protected $arguments = null;
@@ -17,7 +17,7 @@ class View
      * @param string $template
      * @param array $arguments
      */
-    public function __construct($template, array $arguments)
+    public function __construct($template, array $arguments = array())
     {
         $this->template = $template;
         $this->arguments = $arguments;
@@ -73,7 +73,7 @@ class View
             $arguments['type'] = $name;
         }
        
-        $view = new self($templateFile, $arguments);
+        $view = new Partial($templateFile, $arguments);
         $view->render();
     }
 

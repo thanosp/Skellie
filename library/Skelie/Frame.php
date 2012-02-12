@@ -2,6 +2,7 @@
 namespace Skelie;
 
 require_once __DIR__. '/View.php';
+require_once __DIR__. '/Partial.php';
 require_once __DIR__. '/Layout.php';
 require_once __DIR__. '/Template.php';
 
@@ -12,16 +13,6 @@ require_once __DIR__. '/Template.php';
  */
 class Frame extends View
 {
-	protected $templateFile = null;
-
-	/**
-	 * Bootstrapping requires the template file 
-	 * that wordpress decided we should render
-	 */
-	public function __construct($templateFile)
-	{
-	    $this->templateFile = $templateFile;
-	}
 
 	/**
 	 * Figures out what layout to use for the given template
@@ -69,7 +60,7 @@ class Frame extends View
 	 */
 	public function render()
 	{
-	    $templateFile = $this->templateFile;
+	    $templateFile = $this->template;
 	    $layout = $this->getTemplateLayout($templateFile);
 	    $this->renderLayout($layout, function () use ($templateFile) {
 	        $arguments = array('layout' => $templateFile);
