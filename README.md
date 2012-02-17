@@ -25,7 +25,7 @@ In this example layouts/2-columns.php will be rendered instead (if it is found).
 A layout is like a regular wordpress template but contains a placeholder where the content
 from the template is actually rendered into. Rendering that content occurs with:
 
-    <?php $this->content(); ?>
+    <?php echo $this->content(); ?>
 
 
 ### Partials
@@ -34,7 +34,7 @@ to pass variables to the partials. The partial can access the variables you pass
 
 From within a template, layout or another partial (even itself):
 
-    $this->partial('preview', 'whatever', array('divClass' => 'cooool'));
+    echo $this->partial('preview', 'whatever', array('divClass' => 'cooool'));
 
 
 If partials/preview/whatever.php is found it will be called,
