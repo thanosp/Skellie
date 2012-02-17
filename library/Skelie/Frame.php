@@ -38,6 +38,7 @@ class Frame extends View
 	 * @param string $layout
 	 * @param Closure $content
 	 * @param array $arguments
+	 * @return string
 	 */
 	protected function renderLayout($layout, \Closure $content, $arguments = array())
 	{
@@ -52,20 +53,21 @@ class Frame extends View
 	    }
 	   
 	    $layout = new Layout($layoutFile, $content, $arguments);
-	    $layout->render();
+	    return $layout->render();
 	}
 
 	/**
 	 * Init point. Starts the whole process
+	 * @return string
 	 */
 	public function render()
 	{
 	    $templateFile = $this->template;
 	    $layout = $this->getTemplateLayout($templateFile);
-	    $this->renderLayout($layout, function () use ($templateFile) {
+	    return $this->renderLayout($layout, function () use ($templateFile) {
 	        $arguments = array('layout' => $templateFile);
 	        $template = new Template($templateFile, $arguments);
-	        $template->render();
+	        return $template->render();
 	    });
 	}
 }
