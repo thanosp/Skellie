@@ -1,6 +1,6 @@
-<?php $this->partial('header'); ?>
+<?php echo $this->partial('header'); ?>
 <body <?php body_class('layout-'.$this->layout); ?>>
-<?php $this->content(); ?><?php $this->partial('sidebar', 'right'); ?>
-<?php $this->partial('footer'); ?>
+<?php echo $this->content(); ?><?php echo $this->partial('sidebar', 'right'); ?>
+<?php echo $this->partial('footer'); ?>
 </body>
 </html>

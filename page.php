@@ -5,5 +5,5 @@
  */
 while (have_posts()) {
     the_post();
-    $this->partial('content', 'page');
+    echo $this->partial('content', 'page');
 }

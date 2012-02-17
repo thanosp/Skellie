@@ -10,7 +10,7 @@ use Skelie\Frame;
  */
 add_filter('template_include', function ($templateFile) {
     $frame = new Frame($templateFile);
-    $frame->render();
+    echo $frame->render();
     
     //required in order to prevent wordpress from rendering
     return null;
