@@ -5,4 +5,4 @@
 // The archive partial can then be reused for categories and tags as well
 
 $title = 'Search results for &ldquo;'.get_search_query().'&rdquo;';
-$this->partial('list', 'archive', array('title' => $title, 'collection' => 'search'));
+echo $this->partial('list', 'archive', array('title' => $title, 'collection' => 'search'));
