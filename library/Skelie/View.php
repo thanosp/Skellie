@@ -29,8 +29,12 @@ abstract class View
     public function render()
     {
         global $posts, $post, $wp_did_header, $wp_did_template_redirect, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
-       
+        
+        ob_start();
         require $this->template;
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
     }
 
     /**
@@ -56,6 +60,7 @@ abstract class View
      * @param string $slug
      * @param string $name specialization of the slug. ignored if not found
      * @param array $arguments optional arguments for the view
+     * @return string
      */
     public function partial($slug, $name = null, $arguments = array())
     {
@@ -74,7 +79,7 @@ abstract class View
         }
        
         $view = new Partial($templateFile, $arguments);
-        $view->render();
+        return $view->render();
     }
 
     /**

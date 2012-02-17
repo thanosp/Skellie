@@ -24,24 +24,15 @@ class Layout extends View
         $this->contentClosure = $content;
         $this->arguments = $arguments;
     }
-
-    /**
-     * Renders the layout
-     */
-    public function render()
-    {
-        global $posts, $post, $wp_did_header, $wp_did_template_redirect, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
-       
-        require $this->template;
-    }
    
     /**
      * Will call the closure so that the content is rendered
      * Should be called from within the layout
+     * @return string
      */
     public function content()
     {
         $closure = $this->contentClosure;
-        $closure();
+        return $closure();
     }
 } 
