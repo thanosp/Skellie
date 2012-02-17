@@ -15,9 +15,9 @@
             while (have_posts()) {
                 the_post();
                 // call upon the preview partial to show a part of the article
-                $this->partial('preview', $this->collection);
+                echo $this->partial('preview', $this->collection);
             }
         ?>
     </article>
-    <?php $this->partial('paginate', $this->collection); ?>
+    <?php echo $this->partial('paginate', $this->collection); ?>
 </section> 
