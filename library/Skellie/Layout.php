@@ -1,10 +1,10 @@
 <?php
-namespace Skelie;
+namespace Skellie;
 
 /**
  * Layout class
  *
- * @package Skelie
+ * @package Skellie
  */
 class Layout extends View
 {

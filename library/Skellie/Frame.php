@@ -1,5 +1,5 @@
 <?php
-namespace Skelie;
+namespace Skellie;
 
 require_once __DIR__. '/View.php';
 require_once __DIR__. '/Partial.php';
@@ -9,7 +9,7 @@ require_once __DIR__. '/Template.php';
 /**
  * The frame bootstraps the application
  * It brings the layout and the template together
- * @package Skelie
+ * @package Skellie
  */
 class Frame extends View
 {

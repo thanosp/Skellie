@@ -1,10 +1,10 @@
 <?php
-namespace Skelie;
+namespace Skellie;
 
 /**
- * View class.
- * Templates and Layouts all extend this
- * @package Skelie
+ * Generic View class.
+ * All view-object extend this
+ * @package Skellie
  */
 abstract class View
 {

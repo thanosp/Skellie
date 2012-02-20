@@ -1,7 +1,7 @@
 <?php
-require_once 'library/Skelie/Frame.php';
+require_once 'library/Skellie/Frame.php';
 
-use Skelie\Frame;
+use Skellie\Frame;
 
 /**
  * Takes over the rendering process and uses layouts instead
