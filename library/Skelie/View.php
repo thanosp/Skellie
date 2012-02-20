@@ -60,7 +60,7 @@ abstract class View
      * @param string $slug
      * @param string $name specialization of the slug. ignored if not found
      * @param array $arguments optional arguments for the view
-     * @return string
+     * @return string|null
      */
     public function partial($slug, $name = null, $arguments = array())
     {
@@ -79,7 +79,8 @@ abstract class View
         }
        
         $view = new Partial($templateFile, $arguments);
-        return $view->render();
+        $partialContent = $view->render();
+        return ('' !== $partialContent) ? $partialContent : null;
     }
 
     /**
