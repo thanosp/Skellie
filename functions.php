@@ -23,19 +23,16 @@ add_filter('template_include', function ($templateFile) {
 /**
  * Loads stylesheets and javascript files required
  */
-function stylesAndScripts()
-{
+add_action('wp_enqueue_scripts', function () {
     // wp_enqueue_style('normalize', get_template_directory_uri() . '/css/normalize.css');
     // wp_enqueue_script('modernizr', get_template_directory_uri() . '/js/libs/modernizr-2.0.6.min.js');
     // wp_enqueue_style('theme_specific_style', get_template_directory_uri() . '/css/style.css');
-}
-add_action('wp_enqueue_scripts', 'stylesAndScripts');
+});
 
 /**
  * Setups theme specific stuff like thumbnail support and menus
  */
-function setupTheme()
-{
+add_action('after_setup_theme', function () {
     // Need navigation?
     // register_nav_menus(array('primary' => 'Main Menu', 'utilities' => 'Utility Menu'));
    
@@ -46,5 +43,4 @@ function setupTheme()
     // Need post thumbnails?
     // add_theme_support('post-thumbnails');
     // add_image_size('preview', 111, 72, true); // thumbnails for featured-style article blocks (cropped)
-}
-add_action('after_setup_theme', 'setupTheme');
+});
