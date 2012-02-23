@@ -156,13 +156,22 @@ echo $pleaseOverrideTheTitleWith?: 'default';
 		<li class="slide">Skellie templates are like wordpress except that...</li>
 		<li class="slide">Every template has a layout [configurable with a comment or default]</li>
 		<li class="slide">The layout wraps around the template and prints the template within it.</li>
-		<li class="slide">Layouts, templates and partials can have partials</li>
+		<li class="slide">Layouts, templates and partials are all objects with some default vars</li>
+		<li class="slide">Layouts, templates and partials can all use partials</li>
 		<li class="slide">Partials are like template parts but smarter</li>
 	</ul>
 	<div class="slide">
 		<h3>Example</h3>
 		<textarea id="code2" name="code2" class="code" mode="php" style="display: none;"
 		><?php echo $this->partial('single', get_post_type(), array('title' => 'Easy mode')); ?></textarea>
+	</div>
+
+	<div class="slide">Will look for the following files and include the first one:<br/>
+	<ol>
+		<li><code>theme-dir/partials/{$slug}/{$name}.php</code></li>
+		<li><code>theme-dir/partials/{$slug}.php</code></li>
+		<li><code>theme-dir/partials/{$slug}/default.php</code></li>
+	</ol>
 	</div>
 </section>
 
