@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>Skellie</title>
+	
+	<meta name="description" content="A jQuery library for modern HTML presentations">
+	<meta name="author" content="Caleb Troughton">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+	
+	<!-- Core and extension CSS files -->
+	<link rel="stylesheet" href="core/deck.core.css">
+	<link rel="stylesheet" href="extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="extensions/status/deck.status.css">
+	<link rel="stylesheet" href="extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="extensions/codemirror/deck.codemirror.css">
+
+	<link rel="stylesheet" href="extensions/codemirror/themes/default.css">
+	
+	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
+	<link rel="stylesheet" href="themes/transition/fade.css">
+	<script src="modernizr.custom.js"></script>
+</head>
+
+<body class="deck-container">
+
+<!-- Begin slides -->
+<section class="slide" id="title-slide">
+	<h1>Skellie</h1>
+	<img src="../wp-content/themes/Skellie/screenshot.png" />
+</section>
+
+<section class="slide" id="problem-picking">
+	<h2>Problem #1 - Picking a theme</h2>
+	<ol>
+		<li class="slide">
+			<h3>Tons of ready-to-use themes</h3>
+			<p>Building a custom theme based on a working one offers no control over the project.</p>
+		</li>
+		<li class="slide">
+			<h3>Skeleton/blank themes</h3>
+			<p>Most have 10+ functions that are used within their templates heavily. Some even print html.<br/>
+			Others require theme configuration in the database. Eventually they fall into the previous category.</p>
+		</li>
+		<li class="slide">
+			<h3>We keep experimenting with technologies.</h3>
+			<p>Amonst things we've tried: boilerplate with custom css, grid 960, scss, compass...<br/>
+			We keep learning and experimenting with new shinies.</p>
+		</li>
+		<li class="slide">
+			<h3>Requirements vary per project.</h3>
+			<p>Content changes, order of elements change, wrappers are required in order to style them to our needs.</p>
+		</li>
+		<li class="slide">
+			<h3>Nothing stays the same accross projects</h3>
+		</li>
+	</ol>
+</section>
+
+<section class="slide" id="problem-template_part">
+	<h2>Problem #2 -  <code>get_template_part</code></h2>
+	<h3 class="slide">The wordpress way of reusing code within a theme.</h3>
+
+	<div class="slide">
+		<h4><em>Example</em></h4>
+	  <textarea id="code" name="code" class="code" mode="php" style="display: none;"><?php get_template_part($slug, $name); ?></textarea>
+	</div>
+
+	<div class="slide">Will look for the following files and include the first one:<br/>
+	<ol>
+		<li><code>wp-content/themes/theme-folder/{$slug}-{$name}.php</code></li>
+		<li><code>wp-content/themes/theme-folder/{$slug}.php</code></li>
+	</ol>
+	</div>
+
+	<p class="slide">Code included with <code>get_template_part</code> lives within its own scope with most wordpress
+	globals preloaded.</p>
+	<h4 class="slide">The "cleanest" way of communicating information to a template part is...</h4>
+	<div class="slide">
+	<h1>GLOBALS</h1>
+	<textarea id="code2" name="code2" class="code" mode="php" style="display: none;"><?php
+//calling template 
+global $pleaseOverrideTheTitleWith = 'Duuuude';
+get_template_part($slug, $name); 
+
+//template part
+global $pleaseOverrideTheTitleWith;
+echo $pleaseOverrideTheTitleWith?: 'default';
+?></textarea>
+	</div>
+</section>
+
+<section class="slide" id="problem-structure">
+	<h2>Problem #3 - Structure</h2>
+	<p class="slide">GOOD: Wordpress custom post types are very useful for building custom themes.
+	  <textarea id="code" name="code" class="code" mode="php" style="display: none;"><?php get_template_part('single', get_post_type()); ?></textarea>
+	</p>
+	<p class="slide">
+		BAD: Wordpress forces you to put all templates and template_parts in the theme's root directory.
+	</p>
+	<div class="slide"><strong># of php files in the theme root directory</strong>
+		<ul>
+			<li>HP: <strong>35</strong></li>
+			<li>PO: <strong>51</strong></li>
+			<li>BB: <strong>47</strong></li>
+		</ul>
+	</div>
+</section>
+
+<section class="slide" id="problem-templates">
+	<h2>Problem #4 - WP Templates</h2>
+	<ul>
+	<li class="slide"><h4>Meant for differentiating the way a specific page looks like.</h4>
+	<p class="slide">Example: A page (post_type = 'page') is rendered by page.php unless a different template is set.</p></li>
+	<li class="slide"><h3>Also end up in the theme's root directory.</h3></li>
+
+	<li class="slide"><h3>
+		WP template ~ ZF layout [headers/footers/sidebars]
+	</h3>
+	<p class="slide">
+	 headers/footers/sidebars also template parts [theme's root directory]
+		</p>
+	</li>
+	<li class="slide"><h3># of custom template files</h3>
+		<ul>
+			<li>HP: <strong>8</strong></li>
+			<li>PO: <strong>10</strong></li>
+			<li>BB: <strong>19</strong></li>
+		</ul>
+	</li>
+	</ul>
+</section>
+
+<section class="slide" id="skellie-skeleton">
+	<h2>Skellie as a skeleton</h2>
+	<ul>
+		<li class="slide">PHP 5.3 because we can</li>
+		<li class="slide">No css or js attached. Enqueue action in place but empty.</li>
+		<li class="slide">No menus, sidebars or thumbnails. Action with sample code in comments.</li>
+		<li class="slide">No functions in <code>functions.php</code></li>
+		<li class="slide">1 closure to take over rendering from wordpress</li>
+		<li class="slide">No wrapping code in place for the default WP templates</li>
+	</ul>
+</section>
+
+<section class="slide" id="skellie-views">
+	<h2>Skellie view objects</h2>
+	<ul>
+		<li class="slide">Skellie templates are like wordpress except that...</li>
+		<li class="slide">Every template has a layout [configurable with a comment or default]</li>
+		<li class="slide">The layout wraps around the template and prints the template within it.</li>
+		<li class="slide">Layouts, templates and partials can have partials</li>
+		<li class="slide">Partials are like template parts but smarter</li>
+	</ul>
+	<div class="slide">
+		<h3>Example</h3>
+		<textarea id="code2" name="code2" class="code" mode="php" style="display: none;"
+		><?php echo $this->partial('single', get_post_type(), array('title' => 'Easy mode')); ?></textarea>
+	</div>
+</section>
+
+<section class="slide" id="skellie-template">
+	<h2>Skellie Templates</h2>
+	<ul>
+	<li class="slide">Layouts are located in <code>theme-dir/layouts</code></li>
+	<li class="slide">If no layout is chosen it picks the default layout</li>
+	</ul>
+	<div class="slide">
+		<h3>Example template (homepage)</h3>
+		<textarea id="code2" name="code2" class="code" mode="php" style="display: none;"
+		><?php
+/**
+ * Homepage template
+ *
+ * Template Name: Homepage
+ * @layout default
+ */
+if (have_posts()) {
+    the_post();
+    echo $this->partial('content', 'homepage');
+}
+echo $this->partial('list', 'category', array('categoryName' => 'Nieuws', 'limit' => 7));
+?></textarea>
+	</div>
+</section>
+
+<section class="slide" id="skellie-layouts">
+	<h2>Skellie template example (homepage)</h2>
+<div class="slide">
+		<textarea id="code2" name="code2" class="code" mode="php" style="display: none;"
+		><?php echo $this->partial('header'); ?>
+<body <?php body_class('layout-'.$this->layout); ?>>
+    <header class="container_16 clearfix" role="banner">
+        <div class="grid_3">
+            <h1 class="ir siteTitle"><a href="/"><?php bloginfo('name'); ?></a></h1>
+        </div>
+        <div class="grid_9">
+            <?php echo $this->partial('menu', 'utility'); ?>
+        </div>
+        <div class="grid_4">
+            <?php echo $this->partial('search-form', null, array('id' => 'headerSearchForm')); ?>
+        </div>
+        <div class="grid_16">
+            <?php echo $this->partial('menu', 'main'); ?>
+        </div>
+    </header>
+   
+    <div id="wrapper" class="container_16 clearfix" role="main">
+        <div class="grid_3"><aside role="complementary"><?php echo $this->partial('sidebar', 'left'); ?></aside></div>
+        <div class="grid_9"><?php
+            echo $this->partial('menu', 'breadcrumbs');
+            echo $this->content(); //prints the template
+        ?></div>
+        <div class="grid_4"><aside role="complementary"><?php echo $this->partial('sidebar', 'right'); ?></aside></div>
+    </div>
+    <?php echo $this->partial('footer'); ?>
+</body>
+</html> </textarea></div>
+</section>
+
+<section class="slide" id="skellie-structure">
+	<h2>Skellie directory structure</h2>
+	<ul>
+		<li class="slide"><code>theme-dir</code> only for templates</li>
+		<li class="slide"><code>theme-dir/layouts</code> for layouts</li>
+		<li class="slide"><code>theme-dir/partials</code> for partials</li>
+	</ul>
+	<h2 class="slide">Conventions</h2>
+	<ul>
+		<li class="slide"><code>partials/preview</code> for article excerpts</li>
+		<li class="slide"><code>partials/content</code> for full article contents</li>
+		<li class="slide"><code>partials/list</code> for sections with article collections</li>
+		<li class="slide"><code>partials/menu</code> for navigation menu's</li>
+		<li class="slide"><code>partials/sidebar</code> for sidebars (dynamic sidebars preferred)</li>
+		<li class="slide"><code>partials/paginate</code> for pagination (next, prev, numeric, browse-more)</li>
+	</ul>
+</section>
+
+
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+	<datalist id="goto-datalist"></datalist>
+	<input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+
+<!-- Grab CDN jQuery, with a protocol relative URL; fall back to local if offline -->
+<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+<script>window.jQuery || document.write('<script src="jquery-1.7.min.js"><\/script>')</script>
+
+<!-- Deck Core and extensions -->
+<script src="core/deck.core.js"></script>
+<script src="extensions/hash/deck.hash.js"></script>
+<script src="extensions/menu/deck.menu.js"></script>
+<script src="extensions/goto/deck.goto.js"></script>
+<script src="extensions/status/deck.status.js"></script>
+<script src="extensions/navigation/deck.navigation.js"></script>
+
+
+
+<!-- Base codemiror code -->
+<script src="extensions/codemirror/codemirror.js"></script>
+
+<!-- Syntax highlighting Modes -->
+
+<!-- javascript -->
+<script src="extensions/codemirror/mode/javascript/javascript.js"></script>
+
+<!-- html mode (note html mode requires xml, css and javascript) -->
+<script src="extensions/codemirror/mode/xml/xml.js"></script>
+<script src="extensions/codemirror/mode/css/css.js"></script>
+<script src="extensions/codemirror/mode/clike/clike.js"></script>
+<script src="extensions/codemirror/mode/php/php.js"></script>
+<script src="extensions/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+
+<!-- Plugin code -->
+<script src="extensions/codemirror/deck.codemirror.js"></script>
+
+
+<!-- Initialize the deck -->
+<script>
+$(function() {
+	$.deck('.slide');
+});
+</script>
+
+</body>
+</html>
