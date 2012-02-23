@@ -30,7 +30,6 @@
 </head>
 
 <body class="deck-container">
-
 <!-- Begin slides -->
 <section class="slide" id="title-slide">
 	<h1>Skellie</h1>
@@ -142,7 +141,7 @@ echo $pleaseOverrideTheTitleWith?: 'default';
 <section class="slide" id="skellie-views">
 	<h2>Skellie view objects</h2>
 	<ul>
-		<li class="slide">Skellie templates are like wordpress except that...</li>
+		<li class="slide">Skellie templates are like wordpress templates except that...</li>
 		<li class="slide">Every template has a layout [configurable with a comment or default]</li>
 		<li class="slide">The layout wraps around the template and prints the template within it.</li>
 		<li class="slide">Layouts, templates and partials are all objects with some default vars</li>
@@ -165,7 +164,7 @@ echo $pleaseOverrideTheTitleWith?: 'default';
 </section>
 
 <section class="slide" id="skellie-template">
-	<h2>Skellie Templates</h2>
+	<h2>Skellie Layouts and Templates</h2>
 	<ul>
 	<li class="slide">Layouts are located in <code>theme-dir/layouts</code></li>
 	<li class="slide">If no layout is chosen it picks the default layout</li>
@@ -190,7 +189,7 @@ echo $this->partial('list', 'category', array('categoryName' => 'Nieuws', 'limit
 </section>
 
 <section class="slide" id="skellie-layouts">
-	<h2>Skellie template example (homepage)</h2>
+	<h2>Skellie layout example (homepage)</h2>
 <div class="slide">
 		<textarea id="code2" name="code2" class="code" mode="php" style="display: none;"
 		><?php echo $this->partial('header'); ?>
