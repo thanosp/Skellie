@@ -13,7 +13,26 @@ require_once __DIR__. '/Template.php';
  */
 class Frame extends View
 {
+    /**
+     * Upon true only templates that explicitely call
+     * for a skellie layout will run through Skellie
+     * @var boolean
+     */
+    public $cherryPickingRequired = false;
 
+    /**
+     * Cherry picking will allow co-existance of
+     * both Skellie and wordpress rendering.
+     * 
+     * @param boolean $flag defaults to true
+     * @return $this
+     */
+    public function requireCherryPicking($flag = true)
+    {
+        $this->cherryPickingRequired = $flag;
+        return $this;
+    }
+    
 	/**
 	 * Figures out what layout to use for the given template
 	 * Hack, hack, bacon and hack
@@ -44,6 +63,9 @@ class Frame extends View
 	{
 	    $layoutFile = $this->templatePath("/layouts/{$layout}.php");
 	    if (! file_exists($layoutFile)) {
+	        if ($this->cherryPickingRequired) {
+	            return null;
+	        }
 	        $layoutFile = $this->templatePath("/layouts/default.php");
 	    }
 	   
