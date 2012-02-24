@@ -10,9 +10,18 @@ use Skellie\Frame;
  */
 add_filter('template_include', function ($templateFile) {
     $frame = new Frame($templateFile);
-    echo $frame->render();
     
-    //required in order to prevent wordpress from rendering
+    // cherry picking forces templates to choose a layout or wordpress will go on
+    // $frame->enableCherryPicking(true);
+    $output = $frame->render();
+    
+    // if the frame render returned null go on with regular wordpress
+    if (null === $output) {
+        return $templateFile;
+    }
+
+    echo $output;
+    // required in order to prevent wordpress from rendering
     return null;
 }, 10000);
 
