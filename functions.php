@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ .'library/Skellie/Frame.php';
+require_once __DIR__ .'/library/Skellie/Frame.php';
 
 use Skellie\Frame;
 
@@ -12,7 +12,7 @@ add_filter('template_include', function ($templateFile) {
     $frame = new Frame($templateFile);
     
     // cherry picking forces templates to choose a layout or wordpress will go on
-    $output = $frame->enableCherryPicking(false)
+    $output = $frame->requireCherryPicking(false)
         ->render();
     
     // if the frame render returned null go on with regular wordpress
