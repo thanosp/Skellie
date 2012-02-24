@@ -1,5 +1,5 @@
 <?php
-require_once 'library/Skellie/Frame.php';
+require_once __DIR__ .'library/Skellie/Frame.php';
 
 use Skellie\Frame;
 
@@ -12,8 +12,8 @@ add_filter('template_include', function ($templateFile) {
     $frame = new Frame($templateFile);
     
     // cherry picking forces templates to choose a layout or wordpress will go on
-    // $frame->enableCherryPicking(true);
-    $output = $frame->render();
+    $output = $frame->enableCherryPicking(false)
+        ->render();
     
     // if the frame render returned null go on with regular wordpress
     if (null === $output) {
@@ -33,8 +33,9 @@ add_filter('template_include', function ($templateFile) {
  * Loads stylesheets and javascript files required
  */
 add_action('wp_enqueue_scripts', function () {
-    // wp_enqueue_style('normalize', get_template_directory_uri() . '/css/normalize.css');
+    // Need js?
     // wp_enqueue_script('modernizr', get_template_directory_uri() . '/js/libs/modernizr-2.0.6.min.js');
+    // Need css?
     // wp_enqueue_style('theme_specific_style', get_template_directory_uri() . '/css/style.css');
 });
 
