@@ -3,7 +3,9 @@
  * Homepage template
  *
  * Template Name: Homepage
- * @layout with-sidebar
+ * @layout default
+ * @layout[header] default
+ * @layout[footer] default
  */
 while (have_posts()) {
     get_posts();

@@ -36,13 +36,13 @@ class Frame extends View
 	/**
 	 * Figures out what layout to use for the given template
 	 * Hack, hack, bacon and hack
-	 * @param string $template
+	 * @param string $templateContents
 	 * @return string
 	 */
-	public function getTemplateLayout($template)
+	public function getTemplateLayout($templateContents)
 	{
 	    // looks for an annotation that denotes the layout to use
-	    preg_match('/\@layout ([a-z0-9\-\_\.]+)/', file_get_contents($template), $matches);
+	    preg_match('/\@layout ([a-z0-9\-\_\.]+)/i', $templateContents, $matches);
 	    if (isset($matches[1]) && strlen($matches[1]) > 1) {
 	        $layout = $matches[1];
 	    } else {
@@ -79,17 +79,46 @@ class Frame extends View
 	}
 
 	/**
+	 * @param string $template
+	 * @return string
+	 */
+	public function getTemplateContents($template)
+	{
+	    return file_get_contents($template);
+	}
+
+	public function getTemplateArguments($templateContents)
+	{
+		$arguments = array();
+	    // looks for an annotation that denotes the layout to use
+	    preg_match_all('/\@layout\[([a-z\-\.]+)\] ([a-z0-9\-\_\.]+)/i', $templateContents, $matches);
+	    if (isset($matches[1]) && count($matches[1]) > 0) {
+	    	foreach ($matches[1] as $key => $match) {
+	    		$arguments[$match] = $matches[2][$key];
+	    	}
+	    }
+	    return $arguments;
+	}
+
+	/**
 	 * Init point. Starts the whole process
 	 * @return string
 	 */
 	public function render()
 	{
 	    $templateFile = $this->template;
-	    $layout = $this->getTemplateLayout($templateFile);
-	    return $this->renderLayout($layout, function () use ($templateFile) {
-	        $arguments = array('layout' => $templateFile);
-	        $template = new Template($templateFile, $arguments);
-	        return $template->render();
-	    });
+	    $templateContents = $this->getTemplateContents($templateFile);
+
+	    $layout = $this->getTemplateLayout($templateContents);
+        $arguments = $this->getTemplateArguments($templateContents);
+
+	    return $this->renderLayout(
+    		$layout, 
+    		function () use ($templateFile) {
+		        $template = new Template($templateFile);
+		        return $template->render();
+	    	},
+    		$arguments
+    	);
 	}
 }
