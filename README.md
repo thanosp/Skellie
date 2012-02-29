@@ -48,13 +48,15 @@ Any template can now pick a layout.
 A layout is a wrapper around templates in order to avoid duplicate wrapping code.
 Layouts will render the template in a placeholder within them.
 The default layout is located in layouts/default.php (duh)
-You can override or specify a new layout from within the template with a comment like this:
+Layouts can be chosen and configured from the template as in the example below:
 
     /**
     * Template name: Template of doom
     * @layout singleColumn
+    * @layout[var] value
     */
-In this example layouts/singleColumn.php will be rendered instead (if it is found).
+In this example layouts/singleColumn.php will be rendered instead (if it is found)
+and $this->var will be 'value' within the layout so you can use it as you wish.
 
 A layout is like a regular wordpress template but contains a placeholder where the content
 from the template is actually rendered into. Rendering that content occurs with:
