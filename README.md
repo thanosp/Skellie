@@ -29,8 +29,11 @@ to pass variables to the partials. The partial can access the variables you pass
 
 From within a template, layout or another partial (even itself):
 
-    $params = array('divClass' => 'grid_9');
-    echo $this->partial('preview', 'whatever', $params);
+```php
+<?php
+$params = array('divClass' => 'grid_9');
+echo $this->partial('preview', 'whatever', $params);
+```
     
 If partials/preview/whatever.php is found it will be called,
 otherwise the default is partials/preview.php if it exists or partials/preview/default.php
@@ -39,9 +42,11 @@ have to create a directory for it.
 
 Within the partial you can do:
 
-    <div class="<?php echo $this->divClass; ?>">
-        Hola mundo
-    </div>
+```php
+<div class="<?php echo $this->divClass; ?>">
+    Hola mundo
+</div>
+```
 
 ### Layouts
 Any template can now pick a layout.
@@ -50,19 +55,24 @@ Layouts will render the template in a placeholder within them.
 The default layout is located in layouts/default.php (duh)
 Layouts can be chosen and configured from the template as in the example below:
 
-    /**
-    * Template name: Template of doom
-    * @layout singleColumn
-    * @layout[var] value
-    */
+```php
+<?php
+/**
+ * Template name: Template of doom
+ * @layout singleColumn
+ * @layout[var] value
+ */
+```
+
 In this example layouts/singleColumn.php will be rendered instead (if it is found)
 and $this->var will be 'value' within the layout so you can use it as you wish.
 
 A layout is like a regular wordpress template but contains a placeholder where the content
 from the template is actually rendered into. Rendering that content occurs with:
 
-    <?php echo $this->content(); ?>
-
+```php
+<?php echo $this->content(); ?>
+```
 
 --------
         .-.
